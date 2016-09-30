@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Sweeps.belongsTo(models.User)
+        Sweeps.belongsTo(models.Users)
       }
     }
   });
