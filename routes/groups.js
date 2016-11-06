@@ -1,25 +1,24 @@
 var express = require('express');
 var router = express.Router();
 
+var Groups = require('../models/index').Group;
 var Users = require('../models/index').Users;
-var Group = require('../models/index').Group;
-
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  Users.find().then(function (users) {
-    res.send(users)
+  Groups.find().then(function (groups) {
+    res.send(groups)
   })
 });
 
 router.get('/:id', function(req, res, next) {
-  Users.find({
+  Groups.find({
     where: {
       id: req.params.id
     },
-    include: [{model: Group}]
-  }).then(function (user) {
-    res.send(user)
+    include: [{model: Users}]
+  }).then(function (groups) {
+    res.send(groups)
   })
 });
 
@@ -28,26 +27,25 @@ router.post('/', function(req, res, next) {
   if (Object.keys(req.body).length == 0) {
     res.status(400).send();
   } else {
-    Users.create({
-      username: req.body.username,
-      email: req.body.email,
-      birth_date: req.body.birth_date,
-      group_id: req.body.group_id
-    }).then(function (user) {
-      res.send(user)
+    Groups.create({
+      name: req.body.name,
+      type: req.body.type,
+      owner_id: req.body.owner_id
+    }).then(function (group) {
+      res.send(group)
     })
   }
 });
 
 router.delete('/:id', function (req, res, next) {
-  Users.destroy({
+  Groups.destroy({
     where: {
       id: req.params.id
     },
     paranoid: true
-  }).then(function (user) {
-    if (user) {
-      res.json(user);
+  }).then(function (group) {
+    if (group) {
+      res.json(group);
     } else {
       res.sendStatus(404);
     }

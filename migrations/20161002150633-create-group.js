@@ -1,33 +1,23 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('Sweeps', {
+    return queryInterface.createTable('Groups', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      type: {
         type: Sequelize.STRING
       },
-      description: {
-        type: Sequelize.STRING
-      },
-      created_by_user: {
-        type: Sequelize.INTEGER
-      },
-      time_start: {
-        type: Sequelize.DATE
-      },
-      time_end: {
-        type: Sequelize.DATE
-      },
-      location_id: {
-        type: Sequelize.INTEGER
-      },
-      tagline: {
-        type: Sequelize.STRING
+      owner_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +33,6 @@ module.exports = {
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Sweeps');
+    return queryInterface.dropTable('Groups');
   }
 };

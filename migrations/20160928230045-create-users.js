@@ -9,7 +9,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       username: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      birth_date: {
+        type: Sequelize.DATE
+      },
+      group_id: {
+        type: Sequelize.INTEGER
       },
       email: {
         type: Sequelize.STRING
@@ -20,6 +27,9 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
+        type: Sequelize.DATE
+      },
+      deletedAt: {
         type: Sequelize.DATE
       }
     });
