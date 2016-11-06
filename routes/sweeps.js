@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var _ = require('lodash');
 
 var Sweeps = require('../models/index').Sweeps;
+var Locations = require('../models/index').Locations;
 var Users = require('../models/index').Users;
 var Signups = require('../models/index').Signups;
-
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -19,11 +20,27 @@ router.get('/:id', function(req, res, next) {
     where: {
       id: req.params.id
     },
-    include: {model: Signups}
+    include: [{model: Signups}, {model: Locations}]
   }).then(function (sweep) {
     res.send(sweep)
   })
 });
+
+// Get all users signed up for sweep :id
+router.get('/:id/users', function (req, res, next) {
+  Signups.findAll({
+    where: {
+      sweep_id: req.params.id
+    },
+    include: [{model: Users}]
+  }).then(function (signups) {
+    var users = [];
+    _.forEach(signups, function (signup) {
+      users.push(signup.User)
+    })
+    res.send(users)
+  })
+})
 
 /* POST */
 router.post('/', function(req, res, next) {
@@ -54,7 +71,7 @@ router.put('/:id', function(req, res, next) {
       for (var k in req.body) {
         attrUpdating[k] = req.body[k]
       }
-      sweep.updateAttributees(attrUpdating).then(function (sweep) {
+      sweep.updateAttributes(attrUpdating).then(function (sweep) {
         res.send(sweep);
       })
     } else {

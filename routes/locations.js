@@ -45,6 +45,28 @@ router.post('/', function(req, res, next) {
   }
 });
 
+/* PUT */
+router.put('/:id', function(req, res, next) {
+
+  Locations.find({
+    where: {
+      id: req.params.id
+    }
+  }).then(function (location) {
+    if (location) {
+      attrUpdating = {};
+      for (var k in req.body) {
+        attrUpdating[k] = req.body[k]
+      }
+      location.updateAttributes(attrUpdating).then(function (location) {
+        res.send(location);
+      })
+    } else {
+      res.status(404).send();
+    }
+  })
+});
+
 router.delete('/:id', function (req, res, next) {
   Locations.destroy({
     where: {

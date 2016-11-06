@@ -35,6 +35,28 @@ router.post('/', function(req, res, next) {
       res.send(group)
     })
   }
+
+  /* PUT */
+  router.put('/:id', function(req, res, next) {
+
+    Groups.find({
+      where: {
+        id: req.params.id
+      }
+    }).then(function (group) {
+      if (group) {
+        attrUpdating = {};
+        for (var k in req.body) {
+          attrUpdating[k] = req.body[k]
+        }
+        group.updateAttributes(attrUpdating).then(function (group) {
+          res.send(group);
+        })
+      } else {
+        res.status(404).send();
+      }
+    })
+  });
 });
 
 router.delete('/:id', function (req, res, next) {
