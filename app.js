@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var indexController = require('./routes/index');
+var authController = require('./routes/auth');
 var usersController = require('./routes/users');
 var sweepsController = require('./routes/sweeps');
 var groupsController = require('./routes/groups');
@@ -17,6 +18,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.set('superSecret', 'sweeprsecret')
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -27,6 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexController);
+app.use('/auth', authController);
 app.use('/users', usersController);
 app.use('/sweeps', sweepsController);
 app.use('/groups', groupsController);

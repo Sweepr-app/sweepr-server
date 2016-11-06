@@ -48,6 +48,7 @@ router.post('/', function(req, res, next) {
   } else {
     Users.create({
       username: req.body.username,
+      password: Users.generateHash(req.body.password),
       email: req.body.email,
       birth_date: req.body.birth_date,
       group_id: req.body.group_id
