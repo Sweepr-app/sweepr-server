@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
-var jwt = require('jsonwebtoken')
+var jwt = require('jsonwebtoken');
 
 var Users = require('../models/index').Users;
 
@@ -24,7 +24,7 @@ router.post('/', function (req, res, next) {
     // if user is found and password is right
     // create a token
     var token = jwt.sign(user.dataValues, 'sweeprsecret', {
-      expiresIn: "1 day" // expires in 24 hours
+      expiresIn: "1 day"
     });
 
     res.json({

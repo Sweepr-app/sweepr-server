@@ -1,11 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
+var bodyParser = require('body-parser');
+
 
 var Users = require('../models/index').Users;
 var Group = require('../models/index').Group;
 var Signups = require('../models/index').Signups;
 var Sweeps = require('../models/index').Sweeps;
+
+var jwtAuth = require('../services/tokenValidator');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -14,7 +18,7 @@ router.get('/', function(req, res, next) {
   })
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', [jwtAuth], function(req, res, next) {
   Users.find({
     where: {
       id: req.params.id
