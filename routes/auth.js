@@ -30,6 +30,7 @@ router.post('/', function (req, res, next) {
     res.json({
       success: true,
       message: 'Login Successful',
+      user: user,
       token: token
     })
 
